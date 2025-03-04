@@ -29,7 +29,7 @@ parameters <- c(a = 0.3,       # mosquito biting rate per day (~1 bite per three
                 b_v = 0.2,   # probability of infection from an infected host to a susceptible vector
                 b_h = 0.40,   # probability of infection from an infected vector to a susceptible host
                 mu_v = 1/14,  # mortality/recruitment rate of the vector
-                gamma = 1/8,   # recovery rate from symptomatic treated individuals ~(5-14) days
+                gamma = 1/7,   # recovery rate from symptomatic treated individuals ~(5-14) days
                 epsilon = 1/10) # rate of transition from exposed to infected vectors ~ 10 days
 
 times <- seq(from = 0, to = 365, by = 1)    # simulate for a length of time to find equilibrium
@@ -89,8 +89,8 @@ equilibrium_start <- c(Sh = equilibrium$Sh,
 
 
 prop_C = 0.12 # 12% of the population are children under 5
-theta = 0.5  # aging children who retain some protection (partial protection)
-prop_proph = 0.20 # prophylaxis coverage (baseline value)
+theta = 0.2  # aging children who retain some protection (partial protection)
+prop_proph = 0.32 # prophylaxis coverage (baseline value)
 nu = 1/(5*365) #Aging rate (1/5*365)
 prev <- 0.1 ## prevalence of resistant strain
 alpha_parm = 5 ## wild type and resistant weibull parms
@@ -236,12 +236,12 @@ times <- seq(from = 0, to = 365*10, by = 1)    # run for long enough to see the 
 parameters_two <- c(a = 0.3,       # mosquito biting rate per day
                     b_v = 0.2,   # probability of infection from an infected host to a susceptible vector
                     b_h = 0.40,   # probability of infection from an infected vector to a susceptible host
-                    theta = 0.5,  # aging children who retain some protection (partial protection)
+                    theta = 0.2,  # aging children who retain some protection (partial protection)
                     mu_v = 1/14,  # mortality/recruitment rate of the vector
-                    gamma = 1/8,   # recovery rate from symptomatic treated individuals ~(5-14) days
+                    gamma = 1/7,   # recovery rate from symptomatic treated individuals ~(5-14) days
                     nu = 1/(5*365), #Aging rate for the children
                     epsilon = 1/10, # rate of transition from exposed to infected vectors ~ 10 days
-                    prop_proph = 0.20, # proportion of the population receiving prophylaxis
+                    prop_proph = 0.32, # proportion of the population receiving prophylaxis
                     prev = 0.1, # Resistance prevalence at baseline
                     alpha_parm = 5, # weibull parameter
                     beta_parm = 30, # beta wild type
@@ -262,6 +262,16 @@ g1<- ggplot(data = filter(out_two_long, variable %in% c( "Icw","Imw","Icpw", "Im
   xlab("Time (days)")+                                                   
   ylab("Number of people") +                                     
   labs(colour = "Compartment",                                           
-       title = "Malaria model + Seasonality + IPT 20%") 
+       title = "Malaria model + Seasonality + IPT 32%") 
 
 g1
+
+g2<- ggplot(data = filter(out_two_long, variable %in% c( "Shc","Shm","Pc", "Pm")),                                               
+            aes(x = time, y = value, colour = variable, group = variable)) +  
+  geom_line() +                                                          
+  xlab("Time (days)")+                                                   
+  ylab("Number of people") +                                     
+  labs(colour = "Compartment",                                           
+       title = "Malaria dynamics + IPT 32%") 
+
+g2
